@@ -70,9 +70,9 @@ if [ -d "$OUTPUT" ]; then
   echo "    Please delete $OUTPUT directory"
 
 else
-  echo "    $HADOOP_HOME/bin/hadoop  jar $HADOOP_HOME/share/hadoop/tools/lib/hadoop-streaming-$HADOOP_VERSION.jar -input ./input -output ./output -mapper ./mapper.py -reducer ./reducer.py"
+  echo "    $HADOOP_HOME/bin/hadoop  jar $HADOOP_HOME/share/hadoop/tools/lib/hadoop-streaming-$HADOOP_VERSION.jar -input ./input -output ./output -mapper ./go_mapreduce/bin/mapper -reducer ./go_mapreduce/bin/reducer"
 
-  $HADOOP_HOME/bin/hadoop  jar $HADOOP_HOME/share/hadoop/tools/lib/hadoop-streaming-$HADOOP_VERSION.jar -input ./input -output ./output -mapper ./go_mapreduce/bin/mapper -reducer ./reducer.py
+  $HADOOP_HOME/bin/hadoop  jar $HADOOP_HOME/share/hadoop/tools/lib/hadoop-streaming-$HADOOP_VERSION.jar -input ./input -output ./output -mapper ./go_mapreduce/bin/mapper -reducer ./go_mapreduce/bin/reducer
 
   echo "    Check output directory to see the results"
 
