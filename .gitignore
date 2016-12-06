@@ -1,1 +1,4 @@
 
+output/
+go_mapreduce/bin
+go_mapreduce/pkg
