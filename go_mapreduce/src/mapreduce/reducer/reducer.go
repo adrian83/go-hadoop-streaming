@@ -20,15 +20,12 @@ func main() {
 
 		if err != nil {
 			if err != io.EOF {
-				fmt.Fprintf(os.Stderr, "error: can't read - %s\n", err)
+				fmt.Fprintf(os.Stderr, "Error while reading from Stdin. Error: %v\n", err)
 			}
-			// io.EOF
 			break
-
 		}
 
-		line = strings.TrimSpace(line)
-		if len(line) > 0 {
+		if line = strings.TrimSpace(line); line != "" {
 			parts := strings.Split(line, "\t")
 
 			word := parts[0]
@@ -36,16 +33,14 @@ func main() {
 
 			count, err := strconv.Atoi(countStr)
 			if err != nil {
-				fmt.Fprintf(os.Stderr, "not a number! ", err)
-
+				fmt.Fprintf(os.Stderr, "Error while processing data. Cannot convert string to number. Error: %v/n", err)
 				break
 			}
 			counts[word] = counts[word] + count
-
 		}
 	}
+
 	for word, count := range counts {
 		fmt.Printf("%s\t%d\n", word, count)
 	}
-	//fmt.Printf("%s\t%d\n", "test", 8)
 }
