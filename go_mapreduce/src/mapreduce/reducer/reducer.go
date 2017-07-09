@@ -3,7 +3,6 @@ package main
 import (
 	"bufio"
 	"fmt"
-	"io"
 	"os"
 	"strconv"
 	"strings"
@@ -19,9 +18,7 @@ func main() {
 		line, err := bio.ReadString('\n')
 
 		if err != nil {
-			if err != io.EOF {
-				fmt.Fprintf(os.Stderr, "Error while reading from Stdin. Error: %v\n", err)
-			}
+			fmt.Fprintf(os.Stderr, "Error while reading from Stdin. Error: %v\n", err)
 			break
 		}
 
