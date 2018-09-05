@@ -18,28 +18,32 @@ func main() {
 	for true {
 
 		line, err := bio.ReadString('\n')
-
 		if err != nil {
 			fmt.Fprintf(os.Stderr, "Error while reading from Stdin. Error: %v\n", err)
 			break
 		}
 
-		if line = strings.TrimSpace(line); line != "" {
-			words := strings.Split(line, " ")
-
-			for _, word := range words {
-				if word = normalize(word); word != "" {
-					fmt.Println(fmt.Sprintf("%s\t1", word))
-				}
+		words := strings.Split(line, " ")
+		for _, word := range words {
+			if word, ok := normalize(word); ok {
+				fmt.Printf("%s\t1\n", word)
 			}
 		}
+
 	}
 }
 
-func normalize(word string) string {
+func normalize(word string) (string, bool) {
 	word = strings.TrimSpace(word)
+	if word == "" {
+		return "", false
+	}
 	word = strings.ToLower(word)
-	return removeInvalidChar(word)
+	word = removeInvalidChar(word)
+	if word == "" {
+		return "", false
+	}
+	return word, true
 }
 
 func removeInvalidChar(word string) string {
