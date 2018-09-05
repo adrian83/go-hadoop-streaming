@@ -1,11 +1,7 @@
 
-echo "----------------------------------------------------"
-echo "  CHECKING ENV VARS"
-echo ""
+HERE=$(pwd)
 
-
-
-
+echo -e "\n  CHECKING ENV VARS \n"
 
 if [ -z "$HADOOP_HOME" ]; then
     echo "    Please set HADOOP_HOME"
@@ -22,61 +18,37 @@ else
 fi
 
 
-echo ""
-echo "----------------------------------------------------"
-echo "  CHECKING INSTALLED SOFTWARE"
-echo ""
+
+echo -e "\n  CHECKING INSTALLED SOFTWARE \n"
 
 GO=${GO:-$(which go)}
 
 if [ -z "$GO" ]; then
     echo "    Please install Go (golang)"
-    echo ""
-    echo "----------------------------------------------------"
-
     exit 1
 else
   echo "    GO=" $GO
 fi
 
-echo ""
-echo "----------------------------------------------------"
 
-echo "  MODIFY GOPATH"
-echo ""
-HERE=$(pwd)
-PROJ="/go_mapreduce"
-GOPATH=$HERE$PROJ
-echo "    GOPATH=" $GOPATH
-echo ""
-echo "----------------------------------------------------"
+echo -e "\n  BUILD MAPPER AND REDUCER \n"
 
-echo "  BUILD MAPPER AND REDUCER"
-echo ""
-
-go install mapreduce/mapper/
-go install mapreduce/reducer/
+cd $HERE/mapper && go build
+cd $HERE/reducer && go build
+cd $HERE
 
 
-echo ""
-echo "----------------------------------------------------"
-
-echo "  RUN HADOOP JOB"
-echo ""
+echo -e "\n  RUN HADOOP JOB \n"
 
 OUTPUT="./output"
 
 if [ -d "$OUTPUT" ]; then
   echo "    Please delete $OUTPUT directory"
-
+  exit 1
 else
-  echo "    $HADOOP_HOME/bin/hadoop  jar $HADOOP_HOME/share/hadoop/tools/lib/hadoop-streaming-$HADOOP_VERSION.jar -input ./input -output ./output -mapper ./go_mapreduce/bin/mapper -reducer ./go_mapreduce/bin/reducer"
+  echo "    $HADOOP_HOME/bin/hadoop  jar $HADOOP_HOME/share/hadoop/tools/lib/hadoop-streaming-$HADOOP_VERSION.jar -input ./input -output ./output -mapper ./mapper/mapper -reducer ./reducer/reducer"
 
-  $HADOOP_HOME/bin/hadoop  jar $HADOOP_HOME/share/hadoop/tools/lib/hadoop-streaming-$HADOOP_VERSION.jar -input ./input -output ./output -mapper ./go_mapreduce/bin/mapper -reducer ./go_mapreduce/bin/reducer
+  $HADOOP_HOME/bin/hadoop  jar $HADOOP_HOME/share/hadoop/tools/lib/hadoop-streaming-$HADOOP_VERSION.jar -input ./input -output ./output -mapper ./mapper/mapper -reducer ./reducer/reducer
 
   echo "    Check output directory to see the results"
-
 fi
-
-echo ""
-echo "----------------------------------------------------"

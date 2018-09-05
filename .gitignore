@@ -1,4 +1,5 @@
 
 output/
-go_mapreduce/bin
-go_mapreduce/pkg
+
+mapper/mapper
+reducer/reducer
