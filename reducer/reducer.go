@@ -10,18 +10,12 @@ import (
 
 func main() {
 
-	bio := bufio.NewReader(os.Stdin)
+	input := bufio.NewScanner(os.Stdin)
 	counts := make(map[string]int)
 
-	for true {
+	for input.Scan() {
 
-		line, err := bio.ReadString('\n')
-
-		if err != nil {
-			fmt.Fprintf(os.Stderr, "Error while reading from Stdin. Error: %v\n", err)
-			break
-		}
-
+		line := input.Text()
 		if line = strings.TrimSpace(line); line != "" {
 			parts := strings.Split(line, "\t")
 
@@ -30,10 +24,10 @@ func main() {
 
 			count, err := strconv.Atoi(countStr)
 			if err != nil {
-				fmt.Fprintf(os.Stderr, "Error while processing data. Cannot convert string to number. Error: %v/n", err)
+				fmt.Fprintf(os.Stderr, "Error while processing data. Cannot convert string '%s' to number. Error: %v/n", countStr, err)
 				break
 			}
-			counts[word] = counts[word] + count
+			counts[word] += count
 		}
 	}
 
