@@ -33,8 +33,8 @@ fi
 
 echo -e "\n  BUILD MAPPER AND REDUCER \n"
 
-cd $HERE/mapper && go build
-cd $HERE/reducer && go build
+cd $HERE/cmd/mapper && go build
+cd $HERE/cmd/reducer && go build
 cd $HERE
 
 
@@ -48,7 +48,7 @@ if [ -d "$OUTPUT" ]; then
 else
   echo "    $HADOOP_HOME/bin/hadoop  jar $HADOOP_HOME/share/hadoop/tools/lib/hadoop-streaming-$HADOOP_VERSION.jar -input ./input -output ./output -mapper ./mapper/mapper -reducer ./reducer/reducer"
 
-  $HADOOP_HOME/bin/hadoop  jar $HADOOP_HOME/share/hadoop/tools/lib/hadoop-streaming-$HADOOP_VERSION.jar -input ./input -output ./output -mapper ./mapper/mapper -reducer ./reducer/reducer
+  $HADOOP_HOME/bin/hadoop  jar $HADOOP_HOME/share/hadoop/tools/lib/hadoop-streaming-$HADOOP_VERSION.jar -input ./input -output ./output -mapper ./cmd/mapper/mapper -reducer ./cmd/reducer/reducer
 
   echo "    Check output directory to see the results"
 fi

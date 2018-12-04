@@ -1,26 +1,27 @@
-package main
+package mapper
 
 import (
 	"bufio"
 	"fmt"
-	"os"
+	"io"
 	"strings"
 )
 
 var (
-	toRemove = []string{".", ",", ":", ";", "\"", "'", "?", "!", "(", ")"}
+	toRemove = []string{".", ",", ":", ";", "\"", "'", "?", "!", "(", ")", "-"}
 )
 
-func main() {
-
-	input := bufio.NewScanner(os.Stdin)
+// Map maps data from source (io.Reader) and writes result to destination (io.Writer).
+func Map(source io.Reader, destination io.Writer) {
+	//input := bufio.NewScanner(os.Stdin)
+	input := bufio.NewScanner(source)
 
 	for input.Scan() {
 		line := input.Text()
 		words := strings.Split(line, " ")
 		for _, word := range words {
 			if word := normalize(word); word != "" {
-				fmt.Printf("%s\t1\n", word)
+				fmt.Fprintln(destination, fmt.Sprintf("%s\t1\n", word))
 			}
 		}
 	}

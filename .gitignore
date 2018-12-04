@@ -1,5 +1,5 @@
 
 output/
 
-mapper/mapper
-reducer/reducer
+cmd/mapper/mapper
+cmd/reducer/reducer
