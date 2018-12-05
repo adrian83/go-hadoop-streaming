@@ -13,7 +13,6 @@ var (
 
 // Map maps data from source (io.Reader) and writes result to destination (io.Writer).
 func Map(source io.Reader, destination io.Writer) {
-	//input := bufio.NewScanner(os.Stdin)
 	input := bufio.NewScanner(source)
 
 	for input.Scan() {
