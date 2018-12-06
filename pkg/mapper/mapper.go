@@ -7,9 +7,7 @@ import (
 	"strings"
 )
 
-var (
-	toRemove = []string{".", ",", ":", ";", "\"", "'", "?", "!", "(", ")", "-"}
-)
+var toRemove = []string{".", ",", ":", ";", "\"", "'", "?", "!", "(", ")", "-", "\\", "_"}
 
 // Map maps data from source (io.Reader) and writes result to destination (io.Writer).
 func Map(source io.Reader, destination io.Writer) {
@@ -27,6 +25,9 @@ func Map(source io.Reader, destination io.Writer) {
 }
 
 func normalize(word string) string {
+	if word == "" {
+		return word
+	}
 	word = strings.TrimSpace(word)
 	word = strings.ToLower(word)
 	word = removeUselessRunes(word)
