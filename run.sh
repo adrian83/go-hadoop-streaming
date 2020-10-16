@@ -3,6 +3,13 @@ HERE=$(pwd)
 
 echo -e "\n  CHECKING ENV VARS \n"
 
+if [ -z "$JAVA_HOME" ]; then
+    echo "    Please set JAVA_HOME"
+    exit 1
+else
+  echo "    JAVA_HOME=" $JAVA_HOME
+fi
+
 if [ -z "$HADOOP_HOME" ]; then
     echo "    Please set HADOOP_HOME"
     exit 1

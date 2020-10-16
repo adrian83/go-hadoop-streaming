@@ -4,3 +4,6 @@
 
 ### RUN
 `$ ./run.sh`
+
+### INFO
+Copy of book Frankenstein downloaded from [Project Gutenberg](https://www.gutenberg.org/).
