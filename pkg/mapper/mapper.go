@@ -7,7 +7,7 @@ import (
 	"strings"
 )
 
-var toRemove = []string{".", ",", ":", ";", "\"", "'", "?", "!", "(", ")", "-", "\\", "_"}
+var runesToRemove = []string{".", ",", ":", ";", "\"", "'", "?", "!", "(", ")", "-", "\\", "_"}
 
 // Map maps data from source (io.Reader) and writes result to destination (io.Writer).
 func Map(source io.Reader, destination io.Writer) {
@@ -18,7 +18,8 @@ func Map(source io.Reader, destination io.Writer) {
 		words := strings.Split(line, " ")
 		for _, word := range words {
 			if word := normalize(word); word != "" {
-				fmt.Fprintln(destination, fmt.Sprintf("%s\t1\n", word))
+				outputLine := fmt.Sprintf("%s\t1\n", word)
+				fmt.Fprint(destination, outputLine)
 			}
 		}
 	}
@@ -28,26 +29,13 @@ func normalize(word string) string {
 	if word == "" {
 		return word
 	}
+
 	word = strings.TrimSpace(word)
 	word = strings.ToLower(word)
-	word = removeUselessRunes(word)
-	return word
-}
 
-func removeUselessRunes(word string) string {
-	correct := true
-	for _, ch := range toRemove {
-		if strings.HasPrefix(word, ch) {
-			word = strings.TrimPrefix(word, ch)
-			correct = false
-		}
-		if strings.HasSuffix(word, ch) {
-			word = strings.TrimSuffix(word, ch)
-			correct = false
-		}
+	for _, ch := range runesToRemove {
+		word = strings.Replace(word, ch, "", -1)
 	}
-	if correct {
-		return word
-	}
-	return removeUselessRunes(word)
+
+	return word
 }

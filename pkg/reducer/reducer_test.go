@@ -39,7 +39,7 @@ func TestReduceShouldIgnoreEmptyLines(t *testing.T) {
 	errs := errors.String()
 
 	if result != "" {
-		t.Errorf("Result should contain only white characters / runes, but contains: '%v'", result)
+		t.Errorf("Result should contain only white characters (runes), but contains: '%v'", result)
 	}
 
 	if errs != "" {
@@ -60,6 +60,6 @@ func TestReturnErrorForIncorrectInput(t *testing.T) {
 	errs := errors.String()
 
 	if errs == "" {
-		t.Errorf("Expected error but non was returned")
+		t.Errorf("Expected error but none was returned")
 	}
 }

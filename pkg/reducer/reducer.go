@@ -31,11 +31,12 @@ func Reduce(source io.Reader, errors, destination io.Writer) {
 			fmt.Fprintf(errors, "Error while processing data. Cannot convert string '%s' to number. Error: %v/n", countStr, err)
 			break
 		}
-		counts[word] += count
 
+		counts[word] += count
 	}
 
 	for word, count := range counts {
-		fmt.Fprintf(destination, fmt.Sprintf("%s\t%d\n", word, count))
+		outputLine := fmt.Sprintf("%s\t%d\n", word, count)
+		fmt.Fprint(destination, outputLine)
 	}
 }

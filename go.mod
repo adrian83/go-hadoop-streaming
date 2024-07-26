@@ -1,3 +1,3 @@
 module github.com/adrian83/go-hadoop-streaming
 
-go 1.15
+go 1.21
